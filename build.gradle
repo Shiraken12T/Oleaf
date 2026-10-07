@@ -1,0 +1,97 @@
+plugins {
+    id "fabric-loom" version "${loom_version}"
+    id "maven-publish"
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+    archivesName = project.archives_base_name
+}
+
+repositories {
+    mavenLocal()
+    maven {
+        name = "TerraformersMC"
+        url = "https://maven.terraformersmc.com/releases/"
+    }
+    maven {
+        name = "Shedaniel"
+        url = "https://maven.shedaniel.me/"
+    }
+    maven {
+        name = "Modrinth"
+        url = "https://api.modrinth.com/maven/"
+    }
+}
+
+loom {
+    mods {
+        "oleaf" {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+    modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
+    modImplementation("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}") {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+}
+
+processResources {
+    inputs.property "version", project.version
+    filesMatching("fabric.mod.json") {
+        expand "version": inputs.properties.version
+    }
+    from(".") {
+        include "LICENSE"
+        include "THIRD_PARTY_NOTICES.txt"
+        into "META-INF"
+    }
+}
+
+tasks.register("packageModrinthJars", Copy) {
+    dependsOn remapJar
+    group = "distribution"
+    description = "Copy the remapped 1.21.11 jar to jars/1.21.11"
+
+    from(remapJar.archiveFile) {
+        rename { "oleaf-1.21.11-fabric.jar" }
+    }
+    into layout.projectDirectory.dir("jars/1.21.11")
+    doFirst {
+        def outDir = layout.projectDirectory.dir("jars/1.21.11").asFile
+        outDir.mkdirs()
+    }
+}
+
+tasks.named("build").configure {
+    finalizedBy("packageModrinthJars")
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 21
+}
+
+java {
+    withSourcesJar()
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+publishing {
+    publications {
+        create("mavenJava", MavenPublication) {
+            artifactId = project.archives_base_name
+            from components.java
+        }
+    }
+}

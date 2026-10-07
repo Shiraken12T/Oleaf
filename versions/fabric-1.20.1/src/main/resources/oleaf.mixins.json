@@ -1,0 +1,15 @@
+{
+	"required": true,
+	"package": "com.shiraken.optimizationcompanion.mixin",
+	"compatibilityLevel": "JAVA_17",
+	"client": [
+		"OptionsScreenMixin",
+		"GameRendererMixin",
+		"WindowMixin",
+		"MinecraftClientRenderMixin",
+		"MinecraftClientAccessor"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

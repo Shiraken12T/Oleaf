@@ -1,0 +1,26 @@
+{
+  "blend": {
+    "func": "add",
+    "srcrgb": "one",
+    "dstrgb": "zero"
+  },
+  "vertex": "oleaf:blit",
+  "fragment": "oleaf:rcas",
+  "attributes": [
+    "Position",
+    "UV0"
+  ],
+  "samplers": [
+    { "name": "Sampler0" }
+  ],
+  "uniforms": [
+    { "name": "ModelViewMat", "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },
+    { "name": "ProjMat", "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },
+    { "name": "InWidth", "type": "float", "count": 1, "values": [ 1.0 ] },
+    { "name": "InHeight", "type": "float", "count": 1, "values": [ 1.0 ] },
+    { "name": "OutWidth", "type": "float", "count": 1, "values": [ 1.0 ] },
+    { "name": "OutHeight", "type": "float", "count": 1, "values": [ 1.0 ] },
+    { "name": "Sharpen", "type": "float", "count": 1, "values": [ 0.2 ] },
+    { "name": "Algo", "type": "float", "count": 1, "values": [ 0.0 ] }
+  ]
+}

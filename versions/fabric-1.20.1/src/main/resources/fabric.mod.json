@@ -1,0 +1,42 @@
+{
+	"schemaVersion": 1,
+	"id": "oleaf",
+	"version": "${version}",
+	"name": "Oleaf",
+	"description": "Client graphics hub with presets, real AMD FSR1 upscaling, frame generation, and a performance overlay. Made by Shiraken12T.",
+	"authors": [
+		"Shiraken12T"
+	],
+	"contributors": [],
+	"contact": {
+		"homepage": "https://modrinth.com/user/Shiraken12T",
+		"sources": "https://github.com/Shiraken12T/Oleaf",
+		"issues": "https://github.com/Shiraken12T/Oleaf/issues"
+	},
+	"license": "MIT",
+	"icon": "assets/oleaf/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"client": [
+			"com.shiraken.optimizationcompanion.OleafClient"
+		],
+		"modmenu": [
+			"com.shiraken.optimizationcompanion.gui.OleafModMenuIntegration"
+		]
+	},
+	"mixins": [
+		"oleaf.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.16.14",
+		"minecraft": "1.20.1",
+		"java": ">=17",
+		"fabric-api": "*",
+		"modmenu": ">=7.2.2",
+		"cloth-config": ">=11.1.136"
+	},
+	"suggests": {
+		"sodium": "*",
+		"iris": "*"
+	}
+}

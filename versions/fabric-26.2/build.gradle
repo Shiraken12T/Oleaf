@@ -1,0 +1,96 @@
+plugins {
+	id 'net.fabricmc.fabric-loom' version "${loom_version}"
+	id 'maven-publish'
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+	archivesName = project.archives_base_name
+}
+
+repositories {
+	mavenLocal()
+	maven {
+		name = 'TerraformersMC'
+		url = 'https://maven.terraformersmc.com/releases/'
+	}
+	maven {
+		name = 'Shedaniel'
+		url = 'https://maven.shedaniel.me/'
+	}
+	maven {
+		name = 'Modrinth'
+		url = 'https://api.modrinth.com/maven/'
+	}
+}
+
+loom {
+	splitEnvironmentSourceSets()
+
+	mods {
+		'oleaf' {
+			sourceSet sourceSets.main
+			sourceSet sourceSets.client
+		}
+	}
+}
+
+dependencies {
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+	implementation "com.terraformersmc:modmenu:${project.modmenu_version}"
+	implementation("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}") {
+		exclude(group: 'net.fabricmc.fabric-api')
+	}
+}
+
+processResources {
+	def ver = project.version
+	inputs.property 'version', ver
+
+	filesMatching('fabric.mod.json') {
+		expand 'version': ver
+	}
+
+	from('../..') {
+		include 'LICENSE'
+		include 'THIRD_PARTY_NOTICES.txt'
+		into 'META-INF'
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.release = 25
+}
+
+java {
+	withSourcesJar()
+	sourceCompatibility = JavaVersion.VERSION_25
+	targetCompatibility = JavaVersion.VERSION_25
+}
+
+jar {
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+	from('../../LICENSE') {
+		rename { "${it}_oleaf" }
+	}
+}
+
+tasks.register('packageToJars', Copy) {
+	dependsOn jar
+	from(jar.archiveFile) {
+		rename { "oleaf-26.2-fabric.jar" }
+	}
+	into rootProject.file('../../jars/26.2')
+	doFirst {
+		def outDir = rootProject.file('../../jars/26.2')
+		outDir.mkdirs()
+	}
+}
+
+tasks.named('build').configure {
+	finalizedBy('packageToJars')
+}

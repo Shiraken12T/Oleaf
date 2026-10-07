@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="icon.png" alt="Oleaf logo" width="160">
+</p>
+
 # Oleaf
 
 Oleaf is a client-side Fabric mod by Shiraken12T. It replaces Options → Video Settings with one screen for graphics presets, spatial upscaling, frame generation, and an FPS overlay.
@@ -6,7 +10,9 @@ Mod id: `oleaf`
 Config file: `config/oleaf.json`  
 License: MIT
 
-The project icon is `icon.png`. Each build also uses `assets/oleaf/icon.png`.
+Oleaf is also available on CurseForge:
+
+[![CurseForge](https://cf.way2muchnoise.eu/title/oleaf.svg)](https://www.curseforge.com/minecraft/mc-mods/oleaf)
 
 ## Graphics hub
 
@@ -132,6 +138,12 @@ gradlew.bat build
 Use a JDK that matches the Java column in the table above.
 
 The remapped jar is written to `build/libs/`. A packaging task may also copy it to a local `jars/<minecraft-version>/` folder. Built jars are not committed to this repository.
+
+## Support
+
+If you want to support Oleaf development:
+
+[![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/shiraken12t)
 
 ## License
 
